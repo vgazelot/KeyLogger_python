@@ -39,7 +39,7 @@ class TimerClass(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.event = threading.Event()
-    # Lancement
+    # Méthode élémentaire du Thread : définition des envois 
     def run(self):
         while not self.event.is_set():
             global data
